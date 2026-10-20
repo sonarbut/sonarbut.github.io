@@ -3,16 +3,33 @@
   const portrait = hero?.querySelector('img');
   if (!portrait) return;
 
+  let frames = [];
+  let ready = false;
+  let started = false;
+  const loadFrames = () => {
+    if (started) return;
+    started = true;
   // Decode before switching, so slow connections never produce empty frames.
-  const frames = Array.from({ length: 8 }, (_, index) => {
+    frames = Array.from({ length: 8 }, (_, index) => {
     const image = new Image();
-    image.src = `assets/abuse-case/restrictions/${index + 1}.png?v=2`;
+    image.src = `assets/abuse-case/restrictions/${index + 1}.webp`;
     return image;
   });
-  let ready = false;
   Promise.all(frames.map(image => image.decode())).then(() => {
     ready = true;
   }).catch(() => { /* Keep the original image if an asset cannot load. */ });
+
+  };
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(entries => {
+      if (!entries.some(entry => entry.isIntersecting)) return;
+      loadFrames();
+      observer.disconnect();
+    }, { rootMargin: '600px 0px' });
+    observer.observe(hero);
+  } else {
+    loadFrames();
+  }
 
   let frame = 0;
   let previous = null;
