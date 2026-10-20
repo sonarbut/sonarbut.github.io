@@ -1,0 +1,36 @@
+(() => {
+  const hero = document.querySelector('.abuse-image');
+  const portrait = hero?.querySelector('img');
+  if (!portrait) return;
+
+  // Decode before switching, so slow connections never produce empty frames.
+  const frames = Array.from({ length: 3 }, (_, index) => {
+    const image = new Image();
+    image.src = `assets/abuse/${index + 1}.png`;
+    return image;
+  });
+  let ready = false;
+  Promise.all(frames.map(image => image.decode())).then(() => {
+    ready = true;
+  }).catch(() => { /* Keep the original image if an asset cannot load. */ });
+
+  let frame = 0;
+  let previous = null;
+  let distance = 0;
+  let lastChange = -Infinity;
+  const resetMovement = () => { previous = null; distance = 0; };
+
+  hero.addEventListener('pointermove', event => {
+    if (event.pointerType !== 'mouse' || !ready) return;
+    if (previous) distance += Math.hypot(event.clientX - previous.x, event.clientY - previous.y);
+    previous = { x: event.clientX, y: event.clientY };
+    // Advance only while moving, at most ten times per second.
+    if (distance < 24 || event.timeStamp - lastChange < 100) return;
+    frame = (frame + 1) % frames.length;
+    portrait.src = frames[frame].src;
+    lastChange = event.timeStamp;
+    distance = 0;
+  }, { passive: true });
+  hero.addEventListener('pointerleave', resetMovement);
+  window.addEventListener('blur', resetMovement);
+})();
