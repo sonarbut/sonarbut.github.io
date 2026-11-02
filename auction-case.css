@@ -11,3 +11,20 @@
 .auction-page .phone-placeholder{height:663px}
 @media(max-width:1200px){.auction-page .auction-three-phones .phone-placeholder{height:auto;aspect-ratio:320/663}}
 @media(max-width:900px){.auction-page .phone-placeholder{height:auto;aspect-ratio:320/663}}
+
+/* MLP case continuation; images will be supplied separately. */
+.auction-content .auction-mlp-intro h2,.auction-content .auction-launch h2{max-width:1200px;font-size:56px;line-height:64px;letter-spacing:-2px}
+.auction-mlp-copy{max-width:560px}
+.auction-statuses-placeholder{aspect-ratio:1200/524;margin-top:48px}
+.auction-media-placeholder{background:#fafafa;border:2px solid #f2f2f2;border-radius:8px}
+.auction-press{margin-top:80px;gap:64px}
+.auction-press-placeholder{aspect-ratio:560/460}
+.auction-launch{padding-bottom:160px}
+@media(max-width:900px){.auction-content .auction-mlp-intro h2,.auction-content .auction-launch h2{font-size:40px;line-height:48px;letter-spacing:-1px}.auction-press{gap:40px;margin-top:56px}.auction-launch{padding-bottom:100px}}
+@media(max-width:600px){.auction-content .auction-mlp-intro h2,.auction-content .auction-launch h2{font-size:32px;line-height:40px;letter-spacing:-.7px}.auction-statuses-placeholder{margin-top:32px}.auction-press{margin-top:40px;gap:32px}.auction-launch{padding-bottom:48px}}
+
+.auction-statuses-image{display:block;width:100%;height:auto;margin-top:48px}.auction-press{align-items:start}.auction-press-image{display:block;width:100%;height:auto}
+@media(max-width:600px){.auction-statuses-image{margin-top:32px}}
+
+.auction-press-stack{display:flex;flex-direction:column;gap:48px;min-width:0}
+@media(max-width:600px){.auction-press-stack{gap:32px}}
